@@ -14,8 +14,9 @@ headers = {
 def generate_randomized_essay(word_count):
     prompt = f"Write an essay of approximately {word_count} words on a random thought-provoking topic."
     
+    # Updated endpoint based on the provided URL
     response = requests.post(
-        "https://api.genai.google.com/v1/generate",  # Adjust the endpoint as per Gemini API documentation
+        "https://catprep.streamlit.app/v1/generate",  # Correct endpoint
         headers=headers,
         json={
             "prompt": prompt,
@@ -37,8 +38,9 @@ def generate_randomized_essay(word_count):
 def generate_corrections_and_feedback(essay_text):
     correction_prompt = f"Provide grammatical corrections, improvements, and feedback on this essay:\n\n{essay_text}"
     
+    # Updated endpoint based on the provided URL
     response = requests.post(
-        "https://api.genai.google.com/v1/generate",  # Adjust the endpoint as per Gemini API documentation
+        "https://catprep.streamlit.app/v1/generate",  # Correct endpoint
         headers=headers,
         json={
             "prompt": correction_prompt,
@@ -57,8 +59,9 @@ def generate_corrections_and_feedback(essay_text):
 def generate_controversial_topic():
     prompt = "Generate a controversial topic for debate."
     
+    # Updated endpoint based on the provided URL
     response = requests.post(
-        "https://api.genai.google.com/v1/generate",  # Adjust the endpoint as per Gemini API documentation
+        "https://catprep.streamlit.app/v1/generate",  # Correct endpoint
         headers=headers,
         json={
             "prompt": prompt,

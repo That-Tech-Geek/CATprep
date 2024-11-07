@@ -5,7 +5,7 @@ import google.generativeai as genai
 genai.configure(api_key="AIzaSyBzP_urPbe1zBnZwgjhSlVl-MWtUQMEqQA")
 
 # Function to generate content
-def generate_content:
+def generate_content(model, topic, response, answer):
     model = genai.GenerativeModel("gemini-1.5-flash")
     topic = st.dropbox("Philosophy", "Business and Economics", "Ethics", "Current Affairs")
     response = model.generate_content(f"Write a detailed essay for my CAT Preparation. The topic is '{topic}'.")
@@ -13,8 +13,8 @@ def generate_content:
     st.text("Enter the summary of this passage in the textbox below")
     answer = st.textbox("Summary")
 # Function to call AI model to correct the essay and provide feedback
-def generate_corrections_and_feedback(essay_text):
-    correction_prompt = f"Evaluate the summary of this essay, '{response.text}', and propose where I could have done better. Also grade my summary in terms of accuracyof thought: '{answer}'"
+def generate_corrections_and_feedback(response, answer):
+    correction_prompt = f"Evaluate the summary of this essay, '{response}', and propose where I could have done better. Also grade my summary in terms of accuracyof thought: '{answer}'"
     
     # Updated endpoint based on the provided URL
     response = requests.post(

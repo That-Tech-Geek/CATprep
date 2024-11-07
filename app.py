@@ -5,7 +5,7 @@ import google.generativeai as genai
 genai.configure(api_key="AIzaSyBzP_urPbe1zBnZwgjhSlVl-MWtUQMEqQA")
 
 # Function to generate content
-def generate_content(topic):
+def generate_content:
     model = genai.GenerativeModel("gemini-1.5-flash")
     topic = st.dropbox("Philosophy", "Business and Economics", "Ethics", "Current Affairs")
     response = model.generate_content(f"Write a detailed essay for my CAT Preparation. The topic is '{topic}'.")
@@ -65,7 +65,7 @@ if option == "Randomized Essay Writer":
     
     if st.button("Generate Essay"):
         with st.spinner("Generating essay..."):
-            generate_content(topic)
+            generate_content
         
         st.subheader("Essay")
         st.write(essay_text)

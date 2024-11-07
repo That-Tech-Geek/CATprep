@@ -7,7 +7,7 @@ genai.configure(api_key="AIzaSyBzP_urPbe1zBnZwgjhSlVl-MWtUQMEqQA")
 # Function to generate content
 def generate_content(topic):
     model = genai.GenerativeModel("gemini-1.5-flash")
-    response = model.generate_content(f"Write a detailed essay on the topic: {topic}")
+    response = model.generate_content(f"Write a detailed essay for my CAT Preparation.")
     return response.text
 
 # Function to call AI model to correct the essay and provide feedback

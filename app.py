@@ -61,13 +61,10 @@ option = st.selectbox("Choose a function:", ["Randomized Essay Writer", "Controv
 
 if option == "Randomized Essay Writer":
     st.header("Randomized Essay Writer")
-
-    # Inputs for essay writer
-    word_count = st.slider("Select word count for the essay:", min_value=100, max_value=1000, step=50)
     
     if st.button("Generate Essay"):
         with st.spinner("Generating essay..."):
-            essay_text, word_count_generated = generate_content(word_count)
+            generate_content(topic)
         
         st.subheader("Essay")
         st.write(essay_text)

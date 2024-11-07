@@ -5,39 +5,33 @@ import google.generativeai as genai
 # Configure Google Generative AI
 genai.configure(api_key="AIzaSyBzP_urPbe1zBnZwgjhSlVl-MWtUQMEqQA")
 
-# Function to generate content
+# Helper function to interact with the same API for different prompts
+def call_ai_api(prompt, max_tokens=300):
+    headers = {"Authorization": "Bearer YOUR_ACCESS_TOKEN"}  # Replace with your actual token
+    response = requests.post(
+        "https://catprep.streamlit.app/v1/generate",
+        headers=headers,
+        json={"prompt": prompt, "max_tokens": max_tokens}
+    )
+    if response.status_code == 200:
+        return response.json().get("text", "Failed to generate response.")
+    else:
+        return f"Error: {response.status_code} - {response.text}"
+
+# Function to generate content for an essay
 def generate_content(topic):
-    model = genai.GenerativeModel("gemini-1.5-flash")
-    response = model.generate_content(f"Write a detailed essay for my CAT Preparation. The topic is '{topic}'.")
-    return response.text if response else "Failed to generate essay."
+    prompt = f"Write a detailed essay for my CAT Preparation. The topic is '{topic}'."
+    return call_ai_api(prompt)
 
 # Function to call AI model to correct the essay and provide feedback
 def generate_corrections_and_feedback(essay_text, summary):
     correction_prompt = f"Evaluate the summary of this essay, '{essay_text}', and propose where I could have done better. Also grade my summary in terms of accuracy of thought: '{summary}'"
-    headers = {"Authorization": "Bearer YOUR_ACCESS_TOKEN"}  # Add appropriate headers
-    response = requests.post(
-        "https://catprep.streamlit.app/v1/generate",
-        headers=headers,
-        json={"prompt": correction_prompt, "max_tokens": 300}
-    )
-    if response.status_code == 200:
-        return response.json().get("text", "Failed to generate feedback.")
-    else:
-        return "Error: Could not connect to the AI model."
+    return call_ai_api(correction_prompt)
 
-# Function to call AI model to generate a controversial topic
+# Function to generate a controversial topic
 def generate_controversial_topic():
     prompt = "Generate a controversial topic for debate."
-    headers = {"Authorization": "Bearer YOUR_ACCESS_TOKEN"}  # Add appropriate headers
-    response = requests.post(
-        "https://catprep.streamlit.app/v1/generate",
-        headers=headers,
-        json={"prompt": prompt, "max_tokens": 50}
-    )
-    if response.status_code == 200:
-        return response.json().get("text", "Failed to generate topic.")
-    else:
-        return "Error: Could not connect to the AI model."
+    return call_ai_api(prompt, max_tokens=50)
 
 # Main Streamlit App
 st.title("Essay Generator & Controversial Topic Tool")
@@ -77,4 +71,7 @@ elif option == "Controversial Topic Generator":
     
     if st.button("Generate Topic"):
         topic = generate_controversial_topic()
-        st.write(f"Controversial Topic: **{topic}**")
+        if "Error:" in topic:
+            st.error(topic)  # Display error message if there's a connection issue
+        else:
+            st.write(f"Controversial Topic: **{topic}**")

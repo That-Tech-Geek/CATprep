@@ -1,38 +1,14 @@
 import streamlit as st
 import requests
+import google.generativeai as genai
+# Configure Google Generative AI
+genai.configure(api_key="AIzaSyBzP_urPbe1zBnZwgjhSlVl-MWtUQMEqQA")
 
-# Direct API key inclusion (for demonstration purposes; not recommended for production)
-api_key = "AIzaSyBzP_urPbe1zBnZwgjhSlVl-MWtUQMEqQA"
-
-# Headers for API call
-headers = {
-    "Authorization": f"Bearer {api_key}",
-    "Content-Type": "application/json"
-}
-
-# Function to call AI model to generate an essay based on prompt and word count
-def generate_randomized_essay(word_count):
-    prompt = f"Write an essay of approximately {word_count} words on a random thought-provoking topic."
-    
-    # Updated endpoint based on the provided URL
-    response = requests.post(
-        "https://catprep.streamlit.app/v1/generate",  # Correct endpoint
-        headers=headers,
-        json={
-            "prompt": prompt,
-            "max_tokens": word_count * 2  # Adjust token count as needed
-        }
-    )
-    
-    if response.status_code == 200:
-        essay_text = response.json().get("text", "Failed to generate essay.")
-    else:
-        essay_text = "Error: Could not connect to the AI model."
-    
-    # Count the number of words in the generated essay
-    word_count_generated = len(essay_text.split())
-    
-    return essay_text, word_count_generated
+# Function to generate content
+def generate_content(topic):
+    model = genai.GenerativeModel("gemini-1.5-flash")
+    response = model.generate_content(f"Write a detailed essay on the topic: {topic}")
+    return response.text
 
 # Function to call AI model to correct the essay and provide feedback
 def generate_corrections_and_feedback(essay_text):

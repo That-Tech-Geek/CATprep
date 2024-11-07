@@ -9,10 +9,11 @@ def generate_content(topic):
     model = genai.GenerativeModel("gemini-1.5-flash")
     response = model.generate_content(f"Write a detailed essay for my CAT Preparation.")
     return response.text
-
+    st.text("Enter the summary of this passage in the textbox below")
+    answer = st.textbox("Summary")
 # Function to call AI model to correct the essay and provide feedback
 def generate_corrections_and_feedback(essay_text):
-    correction_prompt = f"Provide grammatical corrections, improvements, and feedback on this essay:\n\n{essay_text}"
+    correction_prompt = f"Evaluate the summary of this essay, '{response.text}', and propose where I could have done better. Also grade my summary in terms of accuracyof thought: '{answer}'"
     
     # Updated endpoint based on the provided URL
     response = requests.post(

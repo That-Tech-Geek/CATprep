@@ -7,7 +7,8 @@ genai.configure(api_key="AIzaSyBzP_urPbe1zBnZwgjhSlVl-MWtUQMEqQA")
 # Function to generate content
 def generate_content(topic):
     model = genai.GenerativeModel("gemini-1.5-flash")
-    response = model.generate_content(f"Write a detailed essay for my CAT Preparation.")
+    topic = st.dropbox("Philosophy", "Business and Economics", "Ethics", "Current Affairs")
+    response = model.generate_content(f"Write a detailed essay for my CAT Preparation. The topic is '{topic}'.")
     return response.text
     st.text("Enter the summary of this passage in the textbox below")
     answer = st.textbox("Summary")

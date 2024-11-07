@@ -66,7 +66,7 @@ if option == "Randomized Essay Writer":
     
     if st.button("Generate Essay"):
         with st.spinner("Generating essay..."):
-            essay_text, word_count_generated = generate_randomized_essay(word_count)
+            essay_text, word_count_generated = generate_content(word_count)
         
         st.subheader("Essay")
         st.write(essay_text)
